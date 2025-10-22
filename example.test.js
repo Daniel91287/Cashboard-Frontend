@@ -1,0 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const example = require('./example');
+test('Should have 5 odd numbers in [1, 10]'
+  , () => {
+    const oneToTen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const result = example.oddNumbersOnly(oneToTen);
+    const expectation = 5;
+    expect(result.length).toBe(expectation);
+  });
