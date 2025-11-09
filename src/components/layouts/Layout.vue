@@ -4,6 +4,7 @@
 
 <template>
   <header class="head">
+    <img class="logo" src="../../../public/Logo.png" alt="">
     <h1>Cashboard</h1>
   </header>
   <main>
@@ -26,7 +27,7 @@
   <footer class="htw">
     <small class="htw">Projektarbeit an der</small>
     <a href="https://www.htw-berlin.de/" target="_blank">
-      <img src="../../../public/htw.jpg" alt="HTW Berlin Logo">
+      <img src="../../../public/htw.png" alt="HTW Berlin Logo">
     </a>
   </footer>
 </template>
@@ -49,8 +50,19 @@ main {
 
 header.head {
   position: fixed;
-  top: 0px;
-  left: 10px;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  z-index: 250;
+}
+
+.logo {
+  max-height: 30px;
+  width: auto; /* Proportionen beibehalten */
+  display: block;
 }
 
 footer.git {

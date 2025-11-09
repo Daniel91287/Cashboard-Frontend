@@ -3,7 +3,7 @@
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0rem;
   font-weight: normal;
 }
 
@@ -28,10 +28,10 @@ a,
   }
 
   #app {
-    display: flex; /* Wechsel von grid zu flex */
-    justify-content: center; /* Zentriert den Inhalt */
+    display: flex;
+    justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0 2rem;
+    padding: 0 1rem;
   }
 }

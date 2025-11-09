@@ -10,13 +10,13 @@ const emit = defineEmits(["navigate"]);
       </div>
 
       <div class="LoginEmail">
-        <div><i class="fa-solid fa-envelope"></i> Email</div>
-        <input type="email" />
+        <div><i class="fa-solid fa-envelope"></i></div>
+        <input placeholder="Email" />
       </div>
 
       <div class="LoginPassword">
-        <div><i class="fa-solid fa-key"></i> Passwort</div>
-        <input type="password" />
+        <div><i class="fa-solid fa-key"></i></div>
+        <input placeholder="Passwort"/>
         <div><i class="fa-solid fa-eye-low-vision"></i></div>
       </div>
 
@@ -24,11 +24,11 @@ const emit = defineEmits(["navigate"]);
         <small @click="emit('navigate', 3)">Passwort vergessen?</small>
       </div>
 
-      <div class="loginButton">
-        <button>
-          <p @click="emit('navigate', 4)">Anmelden</p>
-        </button> <button>
-        <p @click="emit('navigate', 2)">Registrieren</p>
+      <div class="buttons">
+        <button class="loginButton" @click="emit('navigate', 4)">
+          <p>Anmelden</p>
+        </button> <button class="registerButton" @click="emit('navigate', 2)">
+        <p>Registrieren</p>
       </button>
       </div>
     </section>
@@ -36,14 +36,19 @@ const emit = defineEmits(["navigate"]);
 
 <style scoped>
 section {
-  max-width: 400px;
+  max-width: 450px;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: 0 14px;
+  padding: 0 24px;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  border: 3px solid hsla(207, 54%, 51%, 0.15);
+  box-shadow: 3px 5px 15px hsla(0,0%,0%,0.2);
+  border-radius: 24px;
 }
 .LoginEmail,
 .LoginPassword {
@@ -55,6 +60,9 @@ section {
   padding: 14px;
   border-radius: 12px;
   background: hsla(207, 54%, 51%, 0.2);
+  border: 1px solid hsla(207, 54%, 51%, 0.15);
+  box-shadow: 1px 3px 4px hsla(0,0%,0%,0.2);
+  transition: all 0.5s ease;
 }
 
 @media (min-width: 1024px) {
@@ -68,9 +76,14 @@ section {
 input {
   background: transparent;
   outline: none;
-  border: unset;
-  color: white;
-  flex: 1;
+  border: none;
+  color: black;
+  flex: 3;
+}
+input::placeholder {
+  opacity: 5;
+  font-size: 1rem;
+  color: black;
 }
 
 .passwortVergessen {
@@ -83,6 +96,43 @@ input {
 .passwortVergessen:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.loginButton,
+.registerButton {
+  display: flex;
+  width: 100%; /* Volle Breite des Containers */
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid hsla(207, 54%, 51%, 0.15);
+  box-shadow: 1px 3px 4px hsla(0,0%,0%,0.2);
+  transition: all 0.5s ease;
+}
+
+.loginButton {
+  background: hsla(207, 54%, 51%, 0.5);
+}
+.loginButton:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 1px hsla(0,0%,0%,0.2);
+  background: hsla(207, 54%, 51%, 0.75);
+}
+
+.registerButton {
+  background: hsla(207, 54%, 51%, 0.25);
+}
+.registerButton:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 1px hsla(0,0%,0%,0.2);
+  background: hsla(207, 54%, 51%, 0.75);
 }
 </style>
 
