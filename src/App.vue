@@ -8,7 +8,7 @@ const selectedDisplay: number = 1;
     <!-- Startseite -->
       <LandingPage v-if="selectedDisplay === 1" />
     <!-- Login Seite -->
-      <LoginPagev v-if="selectedDisplay === 2" />
+      <LoginPage v-if="selectedDisplay === 2" />
     <!-- Registrierung Seite -->
       <RegisterPage v-if="selectedDisplay === 3"/>
   </Layout>
