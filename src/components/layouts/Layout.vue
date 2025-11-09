@@ -12,12 +12,12 @@
   <footer class="git">
     <small>Created by</small>
     <a class="git" href="https://github.com/DavidJulianK" target="_blank">
-      <img class="git" src="../../../pictures/gitdavid.jpeg" alt="pfp">
+      <img class="git" src="../../../public/gitdavid.jpeg" alt="pfp">
       <p>David Julian Kiedacz</p>
       <i class="fa-brands fa-github"></i>
     </a>
     <a class="git" href="https://github.com/DavidJulianK" target="_blank">
-      <img class="git" src="../../../pictures/gitdavid.jpeg" alt="pfp">
+      <img class="git" src="../../../public/gitdavid.jpeg" alt="pfp">
       <p>Daniel Porath</p>
       <i class="fa-brands fa-github"></i>
     </a>
@@ -26,7 +26,7 @@
   <footer class="htw">
     <small class="htw">Projektarbeit an der</small>
     <a href="https://www.htw-berlin.de/" target="_blank">
-      <img src="../../../pictures/htw.jpg" alt="HTW Berlin Logo">
+      <img src="../../../public/htw.jpg" alt="HTW Berlin Logo">
     </a>
   </footer>
 </template>
@@ -41,6 +41,10 @@ header, footer, main {
 
 main {
   flex: 1;
+  display: block; /* Ändere von flex zu block */
+  min-height: calc(100vh - 120px); /* Statt fester height */
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 header.head {
