@@ -17,8 +17,8 @@
       <p>David Julian Kiedacz</p>
       <i class="fa-brands fa-github"></i>
     </a>
-    <a class="git" href="https://github.com/DavidJulianK" target="_blank">
-      <img class="git" src="../../../public/gitdavid.jpeg" alt="pfp">
+    <a class="git" href="https://github.com/Daniel91287" target="_blank">
+      <img class="git" src="../../../public/gitdaniel.jpg" high="150" alt="pfp">
       <p>Daniel Porath</p>
       <i class="fa-brands fa-github"></i>
     </a>
