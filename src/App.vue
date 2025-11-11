@@ -6,7 +6,7 @@ import PasswortPage from "@/components/PasswortPage.vue";
 import HomePage from "@/components/HomePage.vue";
 
 import { ref } from "vue";
-const selectedDisplay = ref(1);
+const selectedDisplay = ref(1); //* Ändern und aussteuern über Router */
 </script>
 
 <template>
