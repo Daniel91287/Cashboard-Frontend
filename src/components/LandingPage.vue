@@ -6,67 +6,81 @@ const router = useRouter()
 
 <template>
     <section id="landingpage">
-      <div>
-        <h1 class="headerText">Willkommen beim Cashboard</h1>
-        <h3 class="subHeaderText">Bekomme einen umfassenden Überblick über deine Finanzen</h3>
-      </div>
-
-      <div class="LoginEmail">
-        <div class="icon-wrapper">
-          <Mail class="icon" />
+      <div class="login-card">
+        <div>
+          <h1 class="headerText">Willkommen beim Cashboard</h1>
+          <h3 class="subHeaderText">Bekomme einen umfassenden Überblick über deine Finanzen</h3>
         </div>
-        <input placeholder="Email" />
-      </div>
 
-      <div class="LoginPassword">
-        <div class="icon-wrapper">
-          <KeyRound class="icon" />
+        <div class="LoginEmail">
+          <div class="icon-wrapper">
+            <Mail class="icon" />
+          </div>
+          <input placeholder="Email" />
         </div>
-        <input placeholder="Passwort" />
-        <div class="icon-wrapper">
-          <EyeOff class="icon" />
+
+        <div class="LoginPassword">
+          <div class="icon-wrapper">
+            <KeyRound class="icon" />
+          </div>
+          <input placeholder="Passwort" />
+          <div class="icon-wrapper">
+            <EyeOff class="icon" />
+          </div>
         </div>
-      </div>
 
-      <div class="passwortVergessen">
-        <small @click="router.push({ name: 'forgot-password' })">
-          Passwort vergessen?
-        </small>
-      </div>
+        <div class="passwortVergessen">
+          <small @click="router.push({ name: 'forgot-password' })">
+            Passwort vergessen?
+          </small>
+        </div>
 
-      <div class="buttons">
-        <button class="loginButton" @click="router.push({ name: 'home' })">
-          <p>Anmelden</p>
+        <div class="buttons">
+          <button class="loginButton" @click="router.push({ name: 'home' })">
+            <p>Anmelden</p>
+          </button>
+          <br>
+          <button class="registerButton" @click="router.push({ name: 'register' })">
+            <p>Registrieren</p>
         </button>
-        <button class="registerButton" @click="router.push({ name: 'register' })">
-          <p>Registrieren</p>
-      </button>
+        </div>
       </div>
     </section>
 </template>
 
 <style scoped>
-section {
-  max-width: 450px;
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+
+  /* Abgerundete Ecken */
+  border-radius: 24px;
+
+  /* Hintergrundverlauf */
+  background: linear-gradient(
+    to bottom,
+    rgba(173, 216, 255, 0.35) 0%,    /* leichtes Blau oben */
+    rgba(255, 255, 255, 0.9) 35%,    /* fast weiß */
+    rgba(255, 255, 255, 1) 100%      /* voll weiß */
+  );
+
+  /* Glassmorphism light */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  /* Soft Glow unten */
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.05),
+    0 10px 30px rgba(129, 90, 255, 0.15);
+
+  /* Feiner innerer Rand */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: 0 24px;
-  padding-bottom: 1rem;
-  padding-top: 1rem;
-  border: 3px solid hsla(207, 54%, 51%, 0.15);
-  box-shadow: 3px 5px 15px hsla(0,0%,0%,0.2);
-  border-radius: 24px;
-}
-#landingpage {
-  width: 100%;
-  display: flex;             /* wir machen das ganze Ding zur Flexbox */
-  flex-direction: column;    /* Inhalt bleibt untereinander (h1, form etc.) */
-  justify-content: center;   /* vertikal zentrieren */
-  align-items: center;       /* horizontal zentrieren */
-  text-align: center;        /* optional: Texte auch mittig */
+  gap: 1rem;
 }
 
 .LoginEmail,
@@ -117,13 +131,7 @@ input::placeholder {
   cursor: pointer;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 700px;
-}
+
 
 .loginButton,
 .registerButton {
