@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const emit = defineEmits(["navigate"]);
+import {useRouter} from "vue-router";
+const router = useRouter()
 </script>
 
 <template>
-  <small @click="emit('navigate', 1)">Zurück [Du bist bei der PasswortPage]</small>
+  <small @click="router.go(-1)">Zurück [Du bist bei der PasswortPage]</small>
 </template>
 
 <style scoped>

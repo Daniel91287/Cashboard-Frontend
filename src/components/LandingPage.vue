@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const emit = defineEmits(["navigate"]);
+import { useRouter } from 'vue-router'
 import { Mail, KeyRound, EyeOff } from "lucide-vue-next";
+const router = useRouter()
 </script>
 
 <template>
@@ -28,14 +29,17 @@ import { Mail, KeyRound, EyeOff } from "lucide-vue-next";
       </div>
 
       <div class="passwortVergessen">
-        <small @click="emit('navigate', 3)">Passwort vergessen?</small>
+        <small @click="router.push({ name: 'forgot-password' })">
+          Passwort vergessen?
+        </small>
       </div>
 
       <div class="buttons">
-        <button class="loginButton" @click="emit('navigate', 4)">
+        <button class="loginButton" @click="router.push({ name: 'home' })">
           <p>Anmelden</p>
-        </button> <button class="registerButton" @click="emit('navigate', 2)">
-        <p>Registrieren</p>
+        </button>
+        <button class="registerButton" @click="router.push({ name: 'register' })">
+          <p>Registrieren</p>
       </button>
       </div>
     </section>

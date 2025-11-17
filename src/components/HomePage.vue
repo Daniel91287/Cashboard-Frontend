@@ -1,11 +1,12 @@
 <script setup lang="ts">
-const emit = defineEmits(["navigate"]);
+import { useRouter } from 'vue-router'
 import { UmsatzErfassen } from '@/utils/services';
 import { UmsatzUebersicht } from "@/utils/services";
+const router = useRouter()
 </script>
 
 <template>
-  <button class="back" @click="emit('navigate', 1)">Zurück [Du bist auf der HomePage]</button>
+  <button class="back" @click="router.go(-1)">Zurück [Du bist auf der HomePage]</button>
   <h1>Hier kommt ein Chart |/</h1>
   <h3>Füge einen Zugang oder Abfluss hinzu</h3>
   <div class="table">
