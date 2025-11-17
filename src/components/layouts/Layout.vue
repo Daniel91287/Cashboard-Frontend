@@ -33,20 +33,21 @@
 </template>
 
 <style scoped>
-header, footer, main {
+main {
+  /* Breite: zentrierter Container */
   padding: 1rem;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+
+  /* Zentrierung: Flex-Container */
+  min-height: calc(100vh - 120px); /* etwas Platz für Header/Footer */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* vertikal in der Mitte */
+  align-items: center;      /* horizontal in der Mitte */
 }
 
-main {
-  flex: 1;
-  display: block; /* Ändere von flex zu block */
-  min-height: calc(100vh - 120px); /* Statt fester height */
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
 
 header.head {
   position: fixed;

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const emit = defineEmits(["navigate"]);
+import { Mail, KeyRound, EyeOff } from "lucide-vue-next";
 </script>
 
 <template>
@@ -10,14 +11,20 @@ const emit = defineEmits(["navigate"]);
       </div>
 
       <div class="LoginEmail">
-        <div><i class="fa-solid fa-envelope"></i></div>
+        <div class="icon-wrapper">
+          <Mail class="icon" />
+        </div>
         <input placeholder="Email" />
       </div>
 
       <div class="LoginPassword">
-        <div><i class="fa-solid fa-key"></i></div>
-        <input placeholder="Passwort"/>
-        <div><i class="fa-solid fa-eye-low-vision"></i></div>
+        <div class="icon-wrapper">
+          <KeyRound class="icon" />
+        </div>
+        <input placeholder="Passwort" />
+        <div class="icon-wrapper">
+          <EyeOff class="icon" />
+        </div>
       </div>
 
       <div class="passwortVergessen">
@@ -37,7 +44,6 @@ const emit = defineEmits(["navigate"]);
 <style scoped>
 section {
   max-width: 450px;
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,6 +56,15 @@ section {
   box-shadow: 3px 5px 15px hsla(0,0%,0%,0.2);
   border-radius: 24px;
 }
+#landingpage {
+  width: 100%;
+  display: flex;             /* wir machen das ganze Ding zur Flexbox */
+  flex-direction: column;    /* Inhalt bleibt untereinander (h1, form etc.) */
+  justify-content: center;   /* vertikal zentrieren */
+  align-items: center;       /* horizontal zentrieren */
+  text-align: center;        /* optional: Texte auch mittig */
+}
+
 .LoginEmail,
 .LoginPassword {
   display: flex;
@@ -134,5 +149,16 @@ input::placeholder {
   box-shadow: 1px 1px 1px hsla(0,0%,0%,0.2);
   background: hsla(207, 54%, 51%, 0.75);
 }
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
 </style>
 
