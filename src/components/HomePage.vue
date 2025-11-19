@@ -1,16 +1,26 @@
 <script setup lang="ts">
+
 import { useRouter } from 'vue-router'
 import { UmsatzErfassen } from '@/utils/services';
 import { UmsatzUebersicht } from "@/utils/services";
-import {KeyRound} from "lucide-vue-next";
+import {Plus, StepBack, Trash} from "lucide-vue-next";
+
 const router = useRouter()
 </script>
 
 <template>
   <section id="homepage">
     <div class="chart-card">
+
+    <!-- Zurück-Button -->
+      <div class="ZurueckButton" @click="router.go(-1)">
+        <div class="icon-wrapper">
+          <StepBack class="icon" />
+        </div>
+        <!--span>Zurück</span-->
+      </div>
+
       <div>
-        <button class="back" @click="router.go(-1)">Zurück [Du bist auf der HomePage]</button>
         <h1 class="headerText">Hier kommt ein Chart</h1>
         <h3 class="subHeaderText">Füge einen Zugang oder Abfluss hinzu</h3>
       </div>
@@ -20,7 +30,7 @@ const router = useRouter()
         <table>
           <thead>
           <tr>
-            <th>Umsatz</th><th></th>
+            <th>Umsatz</th>
           </tr>
           </thead>
           <tbody>
@@ -34,7 +44,7 @@ const router = useRouter()
 
       <div class="EintragSpeichern">
         <div class="icon-wrapper">
-          <KeyRound class="icon" />
+          <Plus class="icon" />
         </div>
         <input placeholder="Eintrag Speichern" />
       </div>
@@ -43,7 +53,7 @@ const router = useRouter()
         <table>
           <thead>
           <tr>
-            <th>Umsatzübersicht</th><th></th>
+            <th>Umsatzübersicht</th>
           </tr>
           </thead>
           <tbody>
@@ -64,12 +74,9 @@ const router = useRouter()
         </table>
       </div>
 
-      <div>
-        <button>Markierten Eintrag löschen</button>
-      </div>
       <div class="MarkiertenEintragLoeschen">
         <div class="icon-wrapper">
-          <KeyRound class="icon" />
+          <Trash class="icon" />
         </div>
         <input placeholder="Markierten Eintrag löschen" />
       </div>
@@ -129,7 +136,8 @@ const router = useRouter()
 }
 
 .EintragSpeichern,
-.LoginPassword {
+.ZurueckButton,
+.MarkiertenEintragLoeschen {
   display: flex;
   width: 100%;
   max-width: 700px;
@@ -145,7 +153,8 @@ const router = useRouter()
 
 @media (min-width: 1024px) {
   .EintragSpeichern:hover,
-  .LoginPassword:hover{
+  .ZurueckButton:hover,
+  .MarkiertenEintragLoeschen:hover {
     border-color: transparent;
     background: hsla(207, 54%, 51%, 0.25);
   }
@@ -164,20 +173,24 @@ input::placeholder {
   color: black;
 }
 
-.passwortVergessen {
+.ZurueckButton {
   display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  max-width: 600px;
-  margin-top: -0.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  width: fit-content;      /* Passt sich dem Inhalt an */
+  max-width: none;         /* Keine harte 50px-Grenze mehr */
+  margin: 0;               /* Nicht mehr mittig schieben */
+  padding: 8px 14px;       /* Gleiches Feeling wie die anderen Buttons */
 }
-.passwortVergessen:hover {
+
+.ZurueckButton:hover {
   text-decoration: underline;
   cursor: pointer;
 }
 
 .loginButton,
-.registerButton {
+.registerButton
+.ZurueckButton{
   display: flex;
   width: 100%; /* Volle Breite des Containers */
   padding: 14px;
