@@ -39,7 +39,6 @@ const router = useRouter()
           <button class="loginButton" @click="router.push({ name: 'home' })">
             <p>Anmelden</p>
           </button>
-          <br>
           <button class="registerButton" @click="router.push({ name: 'register' })">
             <p>Registrieren</p>
         </button>
@@ -61,14 +60,14 @@ const router = useRouter()
   /* Hintergrundverlauf */
   background: linear-gradient(
     to bottom,
-    rgba(173, 216, 255, 0.35) 0%,    /* leichtes Blau oben */
-    rgba(255, 255, 255, 0.9) 35%,    /* fast weiß */
-    rgba(255, 255, 255, 1) 100%      /* voll weiß */
+    rgba(173, 216, 255, 0.1) 0%,    /* leichtes Blau oben */
+    rgba(173, 216, 255, 0.45) 70%,    /* fast weiß */
+    rgba(255, 255, 255, 0.5) 95%      /* voll weiß */
   );
 
   /* Glassmorphism light */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(100px);
 
   /* Soft Glow unten */
   box-shadow:
@@ -81,6 +80,10 @@ const router = useRouter()
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.headerText {
+  line-height: 1.2;
 }
 
 .LoginEmail,
@@ -142,6 +145,8 @@ input::placeholder {
   border: 1px solid hsla(207, 54%, 51%, 0.15);
   box-shadow: 1px 3px 4px hsla(0,0%,0%,0.2);
   transition: all 0.5s ease;
+
+  margin-bottom: 1rem;
 }
 
 .loginButton {

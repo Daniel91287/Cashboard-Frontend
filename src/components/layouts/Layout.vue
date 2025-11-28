@@ -74,6 +74,8 @@ header.head {
   gap: 0.5rem;
   padding: 1rem;
   z-index: 250;
+  font-size: 1.1rem;
+  color: black;
 }
 
 .logo {
