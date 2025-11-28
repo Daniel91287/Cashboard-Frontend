@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="background">
+  <div>
     <header class="head">
       <img class="logo" src="/Logo.png" alt="">
       <h1>Cashboard</h1>
@@ -35,22 +35,18 @@
   </div>
 </template>
 
-<style scoped>
-/* 🔥 GLOBALER HINTERGRUND – GANZE WEBSITE */
-.background {
-  min-height: 100vh;
-  width: 100vw;              /* statt 100% → garantiert volle Breite */
-  position: relative;
+<style>
+html, body {
+  height: 100vh;
+  width: 100%;
 
   background-image:
-    linear-gradient(to bottom, #c9e6ff 0%, #ffffff 70%),
-    url('/cloud.png');
+    url('/hintergrund.png');
 
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-blend-mode: soft-light;
+  background-position: center;
+  background-blend-mode: multiply;
 }
 
 
