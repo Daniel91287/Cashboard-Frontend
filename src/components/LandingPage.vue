@@ -60,14 +60,14 @@ const router = useRouter()
   /* Hintergrundverlauf */
   background: linear-gradient(
     to bottom,
-    rgba(173, 216, 255, 0.1) 0%,    /* leichtes Blau oben */
-    rgba(173, 216, 255, 0.45) 70%,    /* fast weiß */
+    rgba(255, 255, 255, 0.2) 50%,    /* leichtes Blau oben */
+    rgba(255, 255, 255, 0.45) 70%,    /* fast weiß */
     rgba(255, 255, 255, 0.5) 95%      /* voll weiß */
   );
 
   /* Glassmorphism light */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(100px);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(20px);
 
   /* Soft Glow unten */
   box-shadow:
@@ -83,9 +83,14 @@ const router = useRouter()
 }
 
 .headerText {
-  line-height: 1.2;
+  line-height: 1.8;
+  color: black;
 }
 
+.subHeaderText {
+  line-height: 1.2;
+  color: black;
+}
 .LoginEmail,
 .LoginPassword {
   display: flex;

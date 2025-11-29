@@ -41,7 +41,7 @@ html, body {
   width: 100%;
 
   background-image:
-    url('/hintergrund.jng');
+    url('/hintergrund.jpg');
 
   background-size: cover;
   background-repeat: no-repeat;
@@ -75,13 +75,14 @@ header.head {
   padding: 1rem;
   z-index: 250;
   font-size: 1.1rem;
-  color: black;
+  color: white;
 }
 
 .logo {
   max-height: 30px;
   width: auto;
   display: block;
+  filter: invert(1);
 }
 
 /* Footer Git */
@@ -92,6 +93,7 @@ footer.git {
   padding: 1.5rem;
   text-align: left;
   width: fit-content;
+  color: white;
 }
 
 /* Git Profile Links */
@@ -131,5 +133,6 @@ small.htw {
   position: absolute;
   bottom: 65px;
   right: 28px;
+  color: white;
 }
 </style>
