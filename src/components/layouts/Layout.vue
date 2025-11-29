@@ -41,7 +41,7 @@ html, body {
   width: 100%;
 
   background-image:
-    url('/hintergrund.png');
+    url('/hintergrund.jng');
 
   background-size: cover;
   background-repeat: no-repeat;
