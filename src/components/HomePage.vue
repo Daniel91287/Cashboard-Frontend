@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { UmsatzErfassen } from '@/utils/services';
 import { UmsatzUebersicht } from "@/utils/services";
 import {Plus, StepBack, Trash} from "lucide-vue-next";
+import DynamicTable from "@/components/DynamicTable.vue";
 
 const router = useRouter()
 </script>
@@ -50,28 +51,7 @@ const router = useRouter()
       </div>
 
       <div>
-        <table>
-          <thead>
-          <tr>
-            <th>Umsatzübersicht</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <th>Nr.</th>
-            <th>Bezeichnung</th>
-            <th>Betrag</th>
-            <th>Datum</th>
-          </tr>
-          <tr v-for="(eintrag, index) in UmsatzUebersicht" :key="index">
-            <th>{{ index + 1 }}</th>
-            <td>{{ eintrag.bezeichnung}}</td>
-            <td>{{ eintrag.Betrag }}</td>
-            <td>{{ eintrag.Datum }}</td>
-            <input type="checkbox">
-          </tr>
-          </tbody>
-        </table>
+        <DynamicTable/>
       </div>
 
       <div class="MarkiertenEintragLoeschen">

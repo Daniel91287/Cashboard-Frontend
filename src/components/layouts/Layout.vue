@@ -46,7 +46,7 @@ html, body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-blend-mode: multiply;
+  background-color: #020d0f;
 }
 
 
