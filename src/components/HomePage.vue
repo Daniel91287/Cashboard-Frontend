@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
 import { useRouter } from 'vue-router'
-import { UmsatzErfassen } from '@/utils/services';
-import { UmsatzUebersicht } from "@/utils/services";
 import {Plus, StepBack, Trash} from "lucide-vue-next";
 import DynamicTable from "@/components/DynamicTable.vue";
+import InsertLayer from "@/components/InsertLayer.vue";
 
 const router = useRouter()
 </script>
@@ -26,32 +25,12 @@ const router = useRouter()
         <h3 class="subHeaderText">Füge einen Zugang oder Abfluss hinzu</h3>
       </div>
 
-
-      <div class="table">
-        <table>
-          <thead>
-          <tr>
-            <th>Umsatz</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(beschreibung, index) in UmsatzErfassen" :key="index"> {{ beschreibung }}
-            <th></th>
-            <td><input type="text"></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="EintragSpeichern">
-        <div class="icon-wrapper">
-          <Plus class="icon" />
-        </div>
-        <input placeholder="Eintrag Speichern" />
+      <div>
+        <InsertLayer class="insertLayer" />
       </div>
 
       <div>
-        <DynamicTable/>
+        <DynamicTable class="dynamicTable" />
       </div>
 
       <div class="MarkiertenEintragLoeschen">
@@ -180,23 +159,6 @@ input::placeholder {
   transition: all 0.5s ease;
 }
 
-.loginButton {
-  background: hsla(207, 54%, 51%, 0.5);
-}
-.loginButton:hover {
-  cursor: pointer;
-  box-shadow: 1px 1px 1px hsla(0,0%,0%,0.2);
-  background: hsla(207, 54%, 51%, 0.75);
-}
-
-.registerButton {
-  background: hsla(207, 54%, 51%, 0.25);
-}
-.registerButton:hover {
-  cursor: pointer;
-  box-shadow: 1px 1px 1px hsla(0,0%,0%,0.2);
-  background: hsla(207, 54%, 51%, 0.75);
-}
 .icon-wrapper {
   display: flex;
   align-items: center;
