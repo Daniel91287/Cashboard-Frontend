@@ -1,19 +1,41 @@
 <script setup lang="ts">
 
-import { useRouter } from 'vue-router'
-import {Plus, StepBack, Trash} from "lucide-vue-next";
+import { StepBack, Trash } from "lucide-vue-next";
 import DynamicTable from "@/components/DynamicTable.vue";
 import InsertLayer from "@/components/InsertLayer.vue";
+import { useAuth0 } from '@auth0/auth0-vue'
 
-const router = useRouter()
+const { logout } = useAuth0()
+const { isAuthenticated, user, isLoading } = useAuth0()
+
+function handleLogout() {
+  logout({
+    logoutParams: {
+      returnTo: window.location.origin
+    }
+  })
+}
 </script>
 
 <template>
+  <div v-if="isLoading">
+    Lädt...
+  </div>
+
+  <div v-else-if="isAuthenticated">
+    <p>Eingeloggt als:</p>
+    <p>{{ user?.name }}</p>
+    <p>{{ user?.email }}</p>
+  </div>
+
+  <div v-else>
+    <p>Nicht eingeloggt</p>
+  </div>
   <section id="homepage">
     <div class="chart-card">
 
     <!-- Zurück-Button -->
-      <div class="ZurueckButton" @click="router.go(-1)">
+      <div class="ZurueckButton" @click="handleLogout">
         <div class="icon-wrapper">
           <StepBack class="icon" />
         </div>

@@ -27,6 +27,7 @@
     "lint": "run-s lint:*"
   },
   "dependencies": {
+    "@auth0/auth0-vue": "^2.5.0",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@okta/okta-vue": "^5.8.0",
     "axios": "^1.13.2",

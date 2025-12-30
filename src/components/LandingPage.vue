@@ -1,7 +1,21 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { Mail, KeyRound, EyeOff } from "lucide-vue-next";
+import { useAuth0 } from '@auth0/auth0-vue'
+import {watch} from "vue";
+
+const { loginWithRedirect } = useAuth0()
+const { isAuthenticated, isLoading } = useAuth0()
 const router = useRouter()
+
+watch(
+  () => [isAuthenticated.value, isLoading.value],
+  ([loggedIn, loading]) => {
+    if (!loading && loggedIn) {
+      router.replace('/home')
+    }
+  }
+)
 </script>
 
 <template>
@@ -36,7 +50,7 @@ const router = useRouter()
         </div>
 
         <div class="buttons">
-          <button class="loginButton" @click="router.push({ name: 'home' })">
+          <button class="loginButton" @click="loginWithRedirect()">
             <p>Anmelden</p>
           </button>
           <button class="registerButton" @click="router.push({ name: 'register' })">
