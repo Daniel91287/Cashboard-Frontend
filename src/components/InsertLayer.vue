@@ -22,6 +22,7 @@ async function saveTransaction () {
     amount: amount.value,
     date: new Date(date.value)
   }
+  console.log(token)
   await axios.post(endpoint, payload, {
     headers: {
       Authorization: `Bearer ${token}`
