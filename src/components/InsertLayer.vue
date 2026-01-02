@@ -4,6 +4,7 @@ import axios from 'axios'
 import type {Transaction} from "@/types.ts";
 import {Plus} from "lucide-vue-next";
 import {useAuth0} from "@auth0/auth0-vue";
+import {loadTransaction} from "@/DynamicTable"
 
 const { getAccessTokenSilently } = useAuth0()
 
@@ -32,6 +33,8 @@ async function saveTransaction () {
   description.value = "";
   amount.value = 0;
   date.value = "";
+
+  await loadTransaction();
 }
 
 

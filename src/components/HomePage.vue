@@ -34,12 +34,10 @@ function handleLogout() {
   <section id="homepage">
     <div class="chart-card">
 
-    <!-- Zurück-Button -->
       <div class="ZurueckButton" @click="handleLogout">
         <div class="icon-wrapper">
           <StepBack class="icon" />
         </div>
-        <!--span>Zurück</span-->
       </div>
 
       <div>
@@ -53,13 +51,6 @@ function handleLogout() {
 
       <div>
         <DynamicTable class="dynamicTable" />
-      </div>
-
-      <div class="MarkiertenEintragLoeschen">
-        <div class="icon-wrapper">
-          <Trash class="icon" />
-        </div>
-        <input placeholder="Markierten Eintrag löschen" />
       </div>
     </div>
   </section>
@@ -116,9 +107,7 @@ function handleLogout() {
   height: 20px;
 }
 
-.EintragSpeichern,
-.ZurueckButton,
-.MarkiertenEintragLoeschen {
+.ZurueckButton{
   display: flex;
   width: 100%;
   max-width: 700px;
@@ -169,7 +158,6 @@ input::placeholder {
   cursor: pointer;
 }
 
-.loginButton,
 .registerButton
 .ZurueckButton{
   display: flex;
