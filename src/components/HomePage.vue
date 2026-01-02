@@ -1,12 +1,17 @@
 <script setup lang="ts">
 
-import { StepBack, Trash } from "lucide-vue-next";
+import { StepBack } from "lucide-vue-next";
 import DynamicTable from "@/components/DynamicTable.vue";
 import InsertLayer from "@/components/InsertLayer.vue";
 import { useAuth0 } from '@auth0/auth0-vue'
+import axios, {type AxiosResponse} from "axios";
+import {onMounted, ref, type Ref} from "vue";
+import type {Transaction} from "@/types.ts";
 
 const { logout } = useAuth0()
-const { isAuthenticated, user, isLoading } = useAuth0()
+const { isAuthenticated, user, isLoading, getAccessTokenSilently } = useAuth0()
+
+const items: Ref<Transaction[]> = ref([])
 
 function handleLogout() {
   logout({
@@ -15,6 +20,38 @@ function handleLogout() {
     }
   })
 }
+
+async function loadTransaction () {
+  const token = await getAccessTokenSilently()
+
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
+  const endpoint = baseUrl + '/transaction'
+
+  const response: AxiosResponse = await axios.get(endpoint, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  items.value = response.data;
+}
+
+async function deleteTransaction(id: number) {
+  const token = await getAccessTokenSilently()
+
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
+  const endpoint = baseUrl + `/transaction/${id}`
+
+  await axios.delete(endpoint, {
+    headers: { Authorization: `Bearer ${token}`}
+  })
+
+  await loadTransaction();
+}
+
+onMounted(async () => {
+  await loadTransaction()
+})
+
 </script>
 
 <template>
@@ -25,7 +62,6 @@ function handleLogout() {
   <div v-else-if="isAuthenticated">
     <p>Eingeloggt als:</p>
     <p>{{ user?.name }}</p>
-    <p>{{ user?.email }}</p>
   </div>
 
   <div v-else>
@@ -46,11 +82,18 @@ function handleLogout() {
       </div>
 
       <div>
-        <InsertLayer class="insertLayer" />
+        <InsertLayer
+          :loadTransaction="loadTransaction"
+          class="insertLayer"
+        />
       </div>
 
       <div>
-        <DynamicTable class="dynamicTable" />
+        <DynamicTable
+          :items="items"
+          :deleteTransaction="deleteTransaction"
+          class="dynamicTable"
+        />
       </div>
     </div>
   </section>

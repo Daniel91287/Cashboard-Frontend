@@ -1,43 +1,13 @@
 <script setup lang="ts">
-import {ref, onMounted, type Ref} from 'vue'
-import axios from 'axios'
-import type {AxiosResponse} from 'axios'
+import {ref, Ref, defineProps} from 'vue'
 import type {Transaction} from "@/types.ts";
-import {useAuth0} from "@auth0/auth0-vue";
 import {Trash} from "lucide-vue-next";
 
-const items: Ref<Transaction[]> = ref([])
-const { getAccessTokenSilently } = useAuth0()
+const props = defineProps<{
+  items: Transaction[]
+  deleteTransaction: (id: number) => Promise<void>
+}>()
 
-async function loadTransaction () {
-  const token = await getAccessTokenSilently()
-
-  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
-  const endpoint = baseUrl + '/transaction'
-
-  const response: AxiosResponse = await axios.get(endpoint, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-  items.value = response.data;
-}
-
-onMounted(async () => {
-  await loadTransaction()
-})
-
-async function deleteTransaction (id: number) {
-  const token = await getAccessTokenSilently()
-
-  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
-  const endpoint = baseUrl + `/transaction/${id}`
-
-  await axios.delete(endpoint, {
-    headers: { Authorization: `Bearer ${token}`}
-  })
-await loadTransaction();
-}
 
 </script>
 
@@ -56,7 +26,7 @@ await loadTransaction();
         <th>Betrag in EUR </th>
         <th>Datum</th>
       </tr>
-      <tr v-for="(eintrag, index) in items" :key="eintrag.id">
+      <tr v-for="(eintrag, index) in props.items" :key="eintrag.id">
         <th>{{ index + 1 }}</th>
         <td>{{ eintrag.description}}</td>
         <td>{{ eintrag.amount }}</td>

@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {ref, defineProps} from 'vue';
 import axios from 'axios'
 import type {Transaction} from "@/types.ts";
 import {Plus} from "lucide-vue-next";
 import {useAuth0} from "@auth0/auth0-vue";
-import {loadTransaction} from "@/DynamicTable"
 
 const { getAccessTokenSilently } = useAuth0()
 
 const description = ref<string>("");
 const amount = ref<number>(0);
 const date = ref<string>("");
+
+const props = defineProps<{
+  loadTransaction: () => Promise<void>
+}>()
 
 async function saveTransaction () {
   const token = await getAccessTokenSilently()
@@ -23,7 +26,7 @@ async function saveTransaction () {
     amount: amount.value,
     date: new Date(date.value)
   }
-  console.log(token)
+
   await axios.post(endpoint, payload, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -34,7 +37,7 @@ async function saveTransaction () {
   amount.value = 0;
   date.value = "";
 
-  await loadTransaction();
+  await props.loadTransaction()
 }
 
 
