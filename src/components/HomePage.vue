@@ -55,21 +55,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="isLoading">
-    Lädt...
-  </div>
-
-  <div v-else-if="isAuthenticated">
-    <p>Eingeloggt als:</p>
-    <p>{{ user?.name }}</p>
-  </div>
-
-  <div v-else>
-    <p>Nicht eingeloggt</p>
-  </div>
-  <section id="homepage">
     <div class="chart-card">
-
       <div class="ZurueckButton" @click="handleLogout">
         <div class="icon-wrapper">
           <StepBack class="icon" />
@@ -88,7 +74,7 @@ onMounted(async () => {
         />
       </div>
 
-      <div>
+      <div class="table-wrapper">
         <DynamicTable
           :items="items"
           :deleteTransaction="deleteTransaction"
@@ -96,14 +82,12 @@ onMounted(async () => {
         />
       </div>
     </div>
-  </section>
 </template>
 
 <style scoped>
-
 .chart-card {
+  min-height: 80vh;
   width: 100%;
-  max-width: 420px;
   padding: 2rem;
 
   /* Abgerundete Ecken */
@@ -134,9 +118,10 @@ onMounted(async () => {
   gap: 1rem;
 }
 
-
-.table {
-  display: flex;
+.table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .icon-wrapper {
@@ -165,9 +150,7 @@ onMounted(async () => {
 }
 
 @media (min-width: 1024px) {
-  .EintragSpeichern:hover,
-  .ZurueckButton:hover,
-  .MarkiertenEintragLoeschen:hover {
+  .ZurueckButton:hover {
     border-color: transparent;
     background: hsla(207, 54%, 51%, 0.25);
   }
@@ -201,30 +184,9 @@ input::placeholder {
   cursor: pointer;
 }
 
-.registerButton
-.ZurueckButton{
-  display: flex;
-  width: 100%; /* Volle Breite des Containers */
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid hsla(207, 54%, 51%, 0.15);
-  box-shadow: 1px 3px 4px hsla(0,0%,0%,0.2);
-  transition: all 0.5s ease;
-}
-
 .icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-
-.back {
-  background: #3F88C5;
 }
 </style>

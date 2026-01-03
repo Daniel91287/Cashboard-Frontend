@@ -2,11 +2,12 @@
 </script>
 
 <template>
-  <div>
-    <header class="head">
-      <img class="logo" src="/Logo.png" alt="">
-      <h1>Cashboard</h1>
-    </header>
+  <nav>
+    <div class="logo"><img class="logop" src="/Logo.png" alt="">Cashboard</div>
+    <div class="btns">
+      <button class="btn">Login</button>
+    </div>
+  </nav>
 
     <main>
       <slot />
@@ -32,10 +33,60 @@
         <img src="/htw.png" alt="HTW Berlin Logo">
       </a>
     </footer>
-  </div>
 </template>
 
 <style>
+nav {
+  width: 100%;
+  padding: 1rem 2%;
+  background: rgba(255, 255, 255, 0.00);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  margin-bottom: 1em;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: white;
+}
+
+.nav-links li a {
+  position: relative;
+  font-size: 1.05rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-links li a:hover {
+  color: white;
+  text-shadow: 0 0 1px white;
+}
+
+.btns {
+  display: flex;
+}
+
+.btn {
+  padding: 0.7rem 2.5rem;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  background: #1D4975;
+  color: white;
+  box-shadow: 0 0 8px #1D4975;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
 html, body {
   height: 100vh;
   width: 100%;
@@ -52,36 +103,19 @@ html, body {
 
 /* MAIN bleibt ein flexibler Container */
 main {
-  padding: 1rem;
+  padding-top: 5rem;
+  padding-bottom: 7rem;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Header */
-header.head {
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  z-index: 250;
-  font-size: 1.1rem;
-  color: white;
-}
-
-.logo {
+.logop {
   max-height: 30px;
-  width: auto;
-  display: block;
   filter: invert(1);
 }
 
