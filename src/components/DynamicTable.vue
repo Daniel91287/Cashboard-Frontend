@@ -31,11 +31,13 @@ const props = defineProps<{
         <td>{{ eintrag.description}}</td>
         <td>{{ eintrag.amount }}</td>
         <td>{{ eintrag.date }}</td>
+        <td>
         <div class="deleteButton" @click="deleteTransaction(eintrag.id)">
           <div class="icon-wrappter">
             <Trash class="icon" />
           </div>
         </div>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -43,13 +45,22 @@ const props = defineProps<{
 </template>
 
 <style scoped>
+table {
+  width: 100%;
+
+}
+tbody tr td,
+tbody tr th {
+  padding: 6px 10px;
+}
+
 .deleteButton {
   display: flex;
   width: 100%;
-  max-width: 700px;
+  max-width: 55px;
   margin: 0 auto;
-  gap: 14px;
-  padding: 14px;
+  gap: 12px;
+  padding: 12px;
   border-radius: 12px;
   background: hsla(207, 54%, 51%, 0.2);
   border: 1px solid hsla(207, 54%, 51%, 0.15);
