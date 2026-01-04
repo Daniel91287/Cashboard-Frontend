@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { StepBack } from "lucide-vue-next";
 import DynamicTable from "@/components/DynamicTable.vue";
 import InsertLayer from "@/components/InsertLayer.vue";
 import { useAuth0 } from '@auth0/auth0-vue'
@@ -8,18 +7,9 @@ import axios, {type AxiosResponse} from "axios";
 import {onMounted, ref, type Ref} from "vue";
 import type {Transaction} from "@/types.ts";
 
-const { logout } = useAuth0()
-const { isAuthenticated, user, isLoading, getAccessTokenSilently } = useAuth0()
+const { getAccessTokenSilently } = useAuth0()
 
 const items: Ref<Transaction[]> = ref([])
-
-function handleLogout() {
-  logout({
-    logoutParams: {
-      returnTo: window.location.origin
-    }
-  })
-}
 
 async function loadTransaction () {
   const token = await getAccessTokenSilently()
@@ -56,12 +46,6 @@ onMounted(async () => {
 
 <template>
     <div class="chart-card">
-      <div class="ZurueckButton" @click="handleLogout">
-        <div class="icon-wrapper">
-          <StepBack class="icon" />
-        </div>
-      </div>
-
       <div>
         <h1 class="headerText">Hier kommt ein Chart</h1>
         <h3 class="subHeaderText">Füge einen Zugang oder Abfluss hinzu</h3>
@@ -86,7 +70,7 @@ onMounted(async () => {
 
 <style scoped>
 .chart-card {
-  min-height: 80vh;
+  min-height: 70vh;
   width: 100%;
   padding: 2rem;
 
@@ -115,7 +99,7 @@ onMounted(async () => {
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .table-wrapper {

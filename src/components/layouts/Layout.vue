@@ -1,20 +1,49 @@
 <script setup lang="ts">
+import {watch} from "vue";
+import {useAuth0} from "@auth0/auth0-vue";
+import {useRouter} from "vue-router";
+
+const { loginWithRedirect } = useAuth0()
+const { isAuthenticated, isLoading, logout } = useAuth0()
+const router = useRouter()
+
+watch(
+  () => [isAuthenticated.value, isLoading.value],
+  ([loggedIn, loading]) => {
+    if (!loading && loggedIn) {
+      router.replace('/home')
+    }
+  }
+)
+
+function handleLogout() {
+  logout({
+    logoutParams: {
+      returnTo: window.location.origin
+    }
+  })
+}
+
 </script>
 
 <template>
+  <header>
   <nav>
     <div class="logo"><img class="logop" src="/Logo.png" alt="">Cashboard</div>
     <div class="btns">
-      <button class="btn">Login</button>
+      <button v-if="!isAuthenticated" class="btn" @click="loginWithRedirect()"><p>Login</p></button>
+      <button v-if="isAuthenticated" class="btn" @click="handleLogout()"><p>Logout</p></button>
     </div>
   </nav>
+  </header>
 
     <main>
       <slot />
     </main>
 
-    <footer class="git">
-      <small>Created by</small>
+    <footer>
+      <div class="git">
+      <small class="text">Created by</small>
       <a class="git" href="https://github.com/DavidJulianK" target="_blank">
         <img class="git" src="/gitdavid.jpeg" alt="pfp">
         <p>David Julian Kiedacz</p>
@@ -25,13 +54,14 @@
         <p>Daniel Porath</p>
         <i class="fa-brands fa-github"></i>
       </a>
-    </footer>
+      </div>
 
-    <footer class="htw">
-      <small class="htw">Projektarbeit an der</small>
-      <a href="https://www.htw-berlin.de/" target="_blank">
-        <img src="/htw.png" alt="HTW Berlin Logo">
-      </a>
+      <div class="htw">
+        <small class="text">Projektarbeit an der</small>
+        <a href="https://www.htw-berlin.de/" target="_blank">
+          <img src="/htw.png" alt="HTW Berlin Logo">
+        </a>
+      </div>
     </footer>
 </template>
 
@@ -41,6 +71,21 @@ nav {
   padding: 1rem 2%;
   background: rgba(255, 255, 255, 0.00);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  margin-bottom: 1em;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer {
+  bottom: 0;
+  width: 100%;
+  height: 2em;
+  padding: 3rem 2%;
+  background: rgba(255, 255, 255, 0.00);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   margin-bottom: 1em;
 
@@ -103,31 +148,17 @@ html, body {
 
 /* MAIN bleibt ein flexibler Container */
 main {
-  padding-top: 5rem;
-  padding-bottom: 7rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 90%;
   margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
   flex-direction: column;
+  min-height: 75vh;
 }
 
 /* Header */
 .logop {
   max-height: 30px;
   filter: invert(1);
-}
-
-/* Footer Git */
-footer.git {
-  position: fixed;
-  bottom: 5px;
-  left: 5px;
-  padding: 1.5rem;
-  text-align: left;
-  width: fit-content;
-  color: white;
 }
 
 /* Git Profile Links */
@@ -147,26 +178,12 @@ footer a img.git {
   border-radius: 100%;
 }
 
-/* Footer HTW */
-footer.htw {
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-}
-
-footer.htw img {
+.htw img {
   max-height: 50px;
   display: block;
 }
 
-small.htw {
-  position: absolute;
-  bottom: 65px;
-  right: 28px;
+.text {
   color: white;
 }
 </style>
