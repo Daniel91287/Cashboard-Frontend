@@ -9,6 +9,7 @@ const props = defineProps<{
 
 const chartInstance = ref<Chart | null>(null)
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+let resizeTimeout: number | null = null
 
 function destroyChart() {
   if (chartInstance.value) {
@@ -76,13 +77,28 @@ watch(
   { deep: true, immediate: true }
 )
 
+function handleResize() {
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout)
+  }
+
+  resizeTimeout = setTimeout(() => {
+    if (chartInstance.value) {
+      chartInstance.value.resize()
+    }
+  }, 150) as unknown as number
+}
+
 onMounted(async () => {
-  if (props.items && props.items.length > 0) {
-    await createChart()
+  window.addEventListener('resize', handleResize)
+  if (props.items.length > 0) {
+    createChart()
   }
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+  if (resizeTimeout) clearTimeout(resizeTimeout)
   destroyChart()
 })
 </script>

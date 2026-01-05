@@ -149,7 +149,7 @@ html, body {
 /* MAIN bleibt ein flexibler Container */
 main {
   width: 100%;
-  max-width: 90%;
+  max-width: 85%;
   margin: 0 auto;
   flex-direction: column;
   min-height: 75vh;

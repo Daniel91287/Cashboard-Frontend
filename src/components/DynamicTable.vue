@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, Ref, defineProps} from 'vue'
 import type {Transaction} from "@/types.ts";
-import {Trash} from "lucide-vue-next";
+import {Trash, Pencil} from "lucide-vue-next";
 
 const props = defineProps<{
   items: Transaction[]
@@ -23,20 +23,29 @@ const props = defineProps<{
       <tr>
         <th>Nr.</th>
         <th>Bezeichnung</th>
-        <th>Betrag in EUR </th>
+        <th>Betrag in EUR</th>
         <th>Datum</th>
+        <th>Eintrag bearbeiten</th>
+        <th>Eintrag Löschen</th>
       </tr>
       <tr v-for="(eintrag, index) in props.items" :key="eintrag.id">
         <th>{{ index + 1 }}</th>
-        <td>{{ eintrag.description}}</td>
+        <td>{{ eintrag.description }}</td>
         <td>{{ eintrag.amount }}</td>
         <td>{{ eintrag.date }}</td>
         <td>
-        <div class="deleteButton" @click="deleteTransaction(eintrag.id)">
-          <div class="icon-wrappter">
-            <Trash class="icon" />
+          <div class="editButton" @click="deleteTransaction(eintrag.id)">
+            <div class="icon-wrappter">
+              <Pencil class="icon"/>
+            </div>
           </div>
-        </div>
+        </td>
+        <td>
+          <div class="deleteButton" @click="deleteTransaction(eintrag.id)">
+            <div class="icon-wrappter">
+              <Trash class="icon"/>
+            </div>
+          </div>
         </td>
       </tr>
       </tbody>
@@ -49,6 +58,7 @@ table {
   width: 100%;
 
 }
+
 tbody tr td,
 tbody tr th {
   padding: 6px 10px;
@@ -62,16 +72,46 @@ tbody tr th {
   gap: 12px;
   padding: 12px;
   border-radius: 12px;
-  background: hsla(207, 54%, 51%, 0.2);
+  background: #E44545;
   border: 1px solid hsla(207, 54%, 51%, 0.15);
-  box-shadow: 1px 3px 4px hsla(0,0%,0%,0.2);
+  box-shadow: 1px 3px 4px hsla(0, 0%, 0%, 0.2);
   transition: all 0.5s ease;
+  color: white;
 }
 
 .deleteButton:hover {
   text-decoration: underline;
   cursor: pointer;
   border-color: transparent;
-  background: hsla(207, 54%, 51%, 0.25);
+  background: #7D2020;
 }
+
+.editButton {
+  display: flex;
+  width: 100%;
+  max-width: 55px;
+  margin: 0 auto;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #1D4975;
+  border: 1px solid hsla(207, 54%, 51%, 0.15);
+  box-shadow: 1px 3px 4px hsla(0, 0%, 0%, 0.2);
+  transition: all 0.5s ease;
+  color: white;
+}
+
+.editButton:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  border-color: transparent;
+  background: #48787e;
+}
+
+tb, th, tr, td {
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+
 </style>
