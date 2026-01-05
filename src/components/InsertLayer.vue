@@ -5,7 +5,7 @@ import type {Transaction} from "@/types.ts";
 import {Plus} from "lucide-vue-next";
 import {useAuth0} from "@auth0/auth0-vue";
 
-const { getAccessTokenSilently } = useAuth0()
+const {getAccessTokenSilently} = useAuth0()
 
 const description = ref<string>("");
 const amount = ref<number>(0);
@@ -15,7 +15,7 @@ const props = defineProps<{
   loadTransaction: () => Promise<void>
 }>()
 
-async function saveTransaction () {
+async function saveTransaction() {
   const token = await getAccessTokenSilently()
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
@@ -75,7 +75,7 @@ async function saveTransaction () {
   <div class="EintragSpeichern">
     <Button @click="saveTransaction">
       <div class="icon-wrapper">
-        <Plus class="icon" />
+        <Plus class="icon"/>
       </div>
       Eintrag speichern
     </Button>

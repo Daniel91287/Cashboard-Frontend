@@ -3,8 +3,8 @@ import {watch} from "vue";
 import {useAuth0} from "@auth0/auth0-vue";
 import {useRouter} from "vue-router";
 
-const { loginWithRedirect } = useAuth0()
-const { isAuthenticated, isLoading, logout } = useAuth0()
+const {loginWithRedirect} = useAuth0()
+const {isAuthenticated, isLoading, logout} = useAuth0()
 const router = useRouter()
 
 watch(
@@ -28,21 +28,22 @@ function handleLogout() {
 
 <template>
   <header>
-  <nav>
-    <div class="logo"><img class="logop" src="/Logo.png" alt="">Cashboard</div>
-    <div class="btns">
-      <button v-if="!isAuthenticated" class="btn" @click="loginWithRedirect()"><p>Login</p></button>
-      <button v-if="isAuthenticated" class="btn" @click="handleLogout()"><p>Logout</p></button>
-    </div>
-  </nav>
+    <nav>
+      <div class="logo"><img class="logop" src="/Logo.png" alt="">Cashboard</div>
+      <div class="btns">
+        <button v-if="!isAuthenticated" class="btn" @click="loginWithRedirect()"><p>Login</p>
+        </button>
+        <button v-if="isAuthenticated" class="btn" @click="handleLogout()"><p>Logout</p></button>
+      </div>
+    </nav>
   </header>
 
-    <main>
-      <slot />
-    </main>
+  <main>
+    <slot/>
+  </main>
 
-    <footer>
-      <div class="git">
+  <footer>
+    <div class="git">
       <small class="text">Created by</small>
       <a class="git" href="https://github.com/DavidJulianK" target="_blank">
         <img class="git" src="/gitdavid.jpeg" alt="pfp">
@@ -54,15 +55,15 @@ function handleLogout() {
         <p>Daniel Porath</p>
         <i class="fa-brands fa-github"></i>
       </a>
-      </div>
+    </div>
 
-      <div class="htw">
-        <small class="text">Projektarbeit an der</small>
-        <a href="https://www.htw-berlin.de/" target="_blank">
-          <img src="/htw.png" alt="HTW Berlin Logo">
-        </a>
-      </div>
-    </footer>
+    <div class="htw">
+      <small class="text">Projektarbeit an der</small>
+      <a href="https://www.htw-berlin.de/" target="_blank">
+        <img src="/htw.png" alt="HTW Berlin Logo">
+      </a>
+    </div>
+  </footer>
 </template>
 
 <style>
@@ -136,8 +137,7 @@ html, body {
   height: 100vh;
   width: 100%;
 
-  background-image:
-    url('/hintergrund.jpg');
+  background-image: url('/hintergrund.jpg');
 
   background-size: cover;
   background-repeat: no-repeat;

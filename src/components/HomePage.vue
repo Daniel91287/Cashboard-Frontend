@@ -6,6 +6,7 @@ import { useAuth0 } from '@auth0/auth0-vue'
 import axios, {type AxiosResponse} from "axios";
 import {onMounted, ref, type Ref} from "vue";
 import type {Transaction} from "@/types.ts";
+import TransactionChart from "@/components/TransactionChart.vue";
 
 const { getAccessTokenSilently } = useAuth0()
 
@@ -47,8 +48,10 @@ onMounted(async () => {
 <template>
     <div class="chart-card">
       <div>
-        <h1 class="headerText">Hier kommt ein Chart</h1>
-        <h3 class="subHeaderText">Füge einen Zugang oder Abfluss hinzu</h3>
+      <TransactionChart
+        :items="items"
+        class="transactionChart"
+      />
       </div>
 
       <div>
@@ -75,15 +78,10 @@ onMounted(async () => {
   padding: 2rem;
 
   /* Abgerundete Ecken */
-  border-radius: 24px;
+  border-radius: 12px;
 
   /* Hintergrundverlauf */
-  background: linear-gradient(
-    to bottom,
-    rgba(173, 216, 255, 0.35) 0%,    /* leichtes Blau oben */
-    rgba(255, 255, 255, 0.9) 35%,    /* fast weiß */
-    rgba(255, 255, 255, 1) 100%      /* voll weiß */
-  );
+  background: white;
 
   /* Glassmorphism light */
   backdrop-filter: blur(20px);
