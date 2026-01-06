@@ -34,11 +34,16 @@ async function createChart() {
       datasets: [{
         label: 'Kontosaldo',
         data: getAmounts(),
-        borderWidth: 1
+        borderWidth: 1,
+        tension: 0.3
       }]
     },
     options: {
       responsive: true,
+      animation: {
+        easing: 'easeInOutQuad',
+        duration: 520
+      },
       scales: {
         y: {
           beginAtZero: true
