@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, Ref, defineProps} from 'vue'
+import {defineProps} from 'vue'
 import type {Transaction} from "@/types.ts";
 import {Trash, Pencil} from "lucide-vue-next";
 
@@ -34,14 +34,14 @@ const props = defineProps<{
         <td>{{ eintrag.amount }}</td>
         <td>{{ eintrag.date }}</td>
         <td>
-          <div class="editButton" @click="deleteTransaction(eintrag.id)">
+          <div class="editButton">
             <div class="icon-wrappter">
               <Pencil class="icon"/>
             </div>
           </div>
         </td>
         <td>
-          <div class="deleteButton" @click="deleteTransaction(eintrag.id)">
+          <div class="deleteButton" @click="deleteTransaction(eintrag.id!)">
             <div class="icon-wrappter">
               <Trash class="icon"/>
             </div>
@@ -108,7 +108,7 @@ tbody tr th {
   background: #48787e;
 }
 
-tb, th, tr, td {
+th, tr, td {
   text-align: left;
   border-bottom: 1px solid #ddd;
 }

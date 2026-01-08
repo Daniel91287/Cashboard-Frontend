@@ -97,7 +97,7 @@ function handleResize() {
 onMounted(async () => {
   window.addEventListener('resize', handleResize)
   if (props.items.length > 0) {
-    createChart()
+    await createChart()
   }
 })
 

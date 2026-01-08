@@ -74,9 +74,7 @@ async function saveTransaction() {
 
   <div class="EintragSpeichern">
     <Button @click="saveTransaction">
-      <div class="icon-wrapper">
-        <Plus class="icon"/>
-      </div>
+      <Plus class="icon"/>
       Eintrag speichern
     </Button>
   </div>

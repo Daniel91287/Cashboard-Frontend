@@ -31,9 +31,9 @@ function handleLogout() {
     <nav>
       <div class="logo"><img class="logop" src="/Logo.png" alt="">Cashboard</div>
       <div class="btns">
-        <button v-if="!isAuthenticated" class="btn" @click="loginWithRedirect()"><p>Login</p>
+        <button v-if="!isAuthenticated" class="btn" @click="loginWithRedirect()">Login
         </button>
-        <button v-if="isAuthenticated" class="btn" @click="handleLogout()"><p>Logout</p></button>
+        <button v-if="isAuthenticated" class="btn" @click="handleLogout()">Logout</button>
       </div>
     </nav>
   </header>
@@ -167,7 +167,6 @@ footer a.git {
   align-items: center;
   gap: 0.9rem;
   padding: 0.2rem;
-  padding-right: 0.5rem;
   border-radius: 2rem;
   transition: box-shadow 0.2s;
 }

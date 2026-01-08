@@ -106,38 +106,6 @@ onMounted(async () => {
   min-height: 0;
 }
 
-.icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-.ZurueckButton{
-  display: flex;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  gap: 14px;
-  padding: 14px;
-  border-radius: 12px;
-  background: hsla(207, 54%, 51%, 0.2);
-  border: 1px solid hsla(207, 54%, 51%, 0.15);
-  box-shadow: 1px 3px 4px hsla(0,0%,0%,0.2);
-  transition: all 0.5s ease;
-}
-
-@media (min-width: 1024px) {
-  .ZurueckButton:hover {
-    border-color: transparent;
-    background: hsla(207, 54%, 51%, 0.25);
-  }
-}
-
 input {
   background: transparent;
   outline: none;
@@ -149,26 +117,5 @@ input::placeholder {
   opacity: 5;
   font-size: 1rem;
   color: black;
-}
-
-.ZurueckButton {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: fit-content;      /* Passt sich dem Inhalt an */
-  max-width: none;         /* Keine harte 50px-Grenze mehr */
-  margin: 0;               /* Nicht mehr mittig schieben */
-  padding: 8px 14px;       /* Gleiches Feeling wie die anderen Buttons */
-}
-
-.ZurueckButton:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>
