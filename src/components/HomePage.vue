@@ -81,11 +81,7 @@ onMounted(async () => {
   border-radius: 12px;
 
   /* Hintergrundverlauf */
-  background: white;
-
-  /* Glassmorphism light */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #292929;
 
   /* Soft Glow unten */
   box-shadow:
@@ -93,7 +89,7 @@ onMounted(async () => {
     0 10px 30px rgba(129, 90, 255, 0.15);
 
   /* Feiner innerer Rand */
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(200, 255, 244, 0.5);
 
   display: flex;
   flex-direction: column;

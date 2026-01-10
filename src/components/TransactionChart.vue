@@ -35,7 +35,9 @@ async function createChart() {
         label: 'Kontosaldo',
         data: getAmounts(),
         borderWidth: 1,
-        tension: 0.3
+        tension: 0.3,
+        borderColor: '#c8fff4',
+        pointBackgroundColor: '#c8fff4',
       }]
     },
     options: {
@@ -45,12 +47,27 @@ async function createChart() {
         duration: 520
       },
       scales: {
+        x: {
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.2)'
+          }
+        },
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            color: '#ffffff'
+          },
+          grid: {
+            color: 'rgba(255,255,255,0.2)'
+          }
         }
       }
     }
   }
+
 
   chartInstance.value = new Chart(canvasRef.value, config)
 }
@@ -120,5 +137,8 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-
+.chart-container {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(200, 255, 244, 0.5);
+}
 </style>

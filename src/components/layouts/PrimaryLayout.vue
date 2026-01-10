@@ -124,12 +124,16 @@ footer {
   border-radius: 24px;
   font-weight: 600;
   font-size: 1rem;
-  background: #1D4975;
-  color: white;
-  box-shadow: 0 0 8px #1D4975;
+  background: #027374;
+  color: #c8fff4;
+  box-shadow: rgba(0, 0, 0, .3) 0 3px 12px 0;
   border: none;
   cursor: pointer;
   transition: 0.3s;
+}
+
+.btn:hover {
+  box-shadow: 0 0 12px #027374;
 }
 
 

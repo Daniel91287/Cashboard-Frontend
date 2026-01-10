@@ -13,12 +13,8 @@ const props = defineProps<{
 
 <template>
   <div>
+    <h1 class="headline">Umsatzübersicht</h1>
     <table>
-      <thead>
-      <tr>
-        <th>Umsatzübersicht</th>
-      </tr>
-      </thead>
       <tbody>
       <tr>
         <th>Nr.</th>
@@ -54,9 +50,16 @@ const props = defineProps<{
 </template>
 
 <style scoped>
-table {
+h1 {
   width: 100%;
+  padding: 1rem;
+  border-top: 1px solid rgba(200, 255, 244, 0.5);
+}
 
+table {
+  width: 95%;
+  border-collapse: collapse;
+  margin: 0 auto 2rem auto;
 }
 
 tbody tr td,
@@ -111,7 +114,16 @@ tbody tr th {
 th, tr, td {
   text-align: left;
   border-bottom: 1px solid #ddd;
+  color: white;
 }
 
+th {
+  font-size: 1.2rem;
+}
 
+.headline {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+  color: white;
+}
 </style>
