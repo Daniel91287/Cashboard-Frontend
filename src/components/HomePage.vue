@@ -69,6 +69,7 @@ onMounted(async () => {
         <DynamicTable
           :items="items"
           :deleteTransaction="deleteTransaction"
+          :loadTransaction="loadTransaction"
           class="dynamicTable"
         />
       </div>
