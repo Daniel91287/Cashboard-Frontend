@@ -2,6 +2,7 @@
 import {defineProps, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import type {Transaction} from "@/types.ts";
 import {Chart, type ChartConfiguration} from "chart.js/auto"
+import type { ScriptableContext } from 'chart.js'
 
 const props = defineProps<{
   items: Transaction[]
@@ -19,7 +20,7 @@ function destroyChart() {
 }
 
 async function createChart() {
-  await nextTick() // Warten bis DOM aktualisiert ist
+  await nextTick()
 
   if (!canvasRef.value || props.items.length === 0) {
     return
@@ -27,7 +28,7 @@ async function createChart() {
 
   destroyChart()
 
-  const config: ChartConfiguration = {
+  const config: ChartConfiguration<'line'> = {
     type: 'line',
     data: {
       labels: getLabels(),
@@ -38,6 +39,28 @@ async function createChart() {
         tension: 0.3,
         borderColor: '#c8fff4',
         pointBackgroundColor: '#c8fff4',
+
+        fill: true,
+        backgroundColor: (context: ScriptableContext<'line'>) => {
+          const chart = context.chart
+          const { ctx, chartArea } = chart
+
+          if (!chartArea) {
+            return undefined
+          }
+
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.top,
+            0,
+            chartArea.bottom
+          )
+
+          gradient.addColorStop(0, 'rgba(200,255,244,0.3)')
+          gradient.addColorStop(1, 'rgba(200,255,244,0)')
+
+          return gradient
+        }
       }]
     },
     options: {
@@ -72,10 +95,25 @@ async function createChart() {
   chartInstance.value = new Chart(canvasRef.value, config)
 }
 
-function getLabels(): Date[] {
+function getLabels(): string[] {
+  const formatter = new Intl.DateTimeFormat('de-DE', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  })
+
   return props.items
-    .map(item => item.date)
-    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+    .map(item => new Date(item.date))
+    .sort((a, b) => a.getTime() - b.getTime())
+    .map(date => {
+      const parts = formatter.formatToParts(date)
+
+      const day = parts.find(p => p.type === 'day')?.value
+      const month = parts.find(p => p.type === 'month')?.value.replace('.', '')
+      const year = parts.find(p => p.type === 'year')?.value
+
+      return `${day}. ${month!.toUpperCase()} ${year}`
+    })
 }
 
 function getAmounts(): number[] {

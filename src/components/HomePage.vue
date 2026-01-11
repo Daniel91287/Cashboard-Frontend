@@ -18,12 +18,16 @@ async function loadTransaction () {
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
   const endpoint = baseUrl + '/transaction'
 
-  const response: AxiosResponse = await axios.get(endpoint, {
+  const response: AxiosResponse = await axios.get<Transaction>(endpoint, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   })
   items.value = response.data;
+
+  items.value = response.data.sort((a: Transaction, b: Transaction) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime()
+  })
 }
 
 async function deleteTransaction(id: number) {

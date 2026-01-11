@@ -8,7 +8,23 @@ const props = defineProps<{
   deleteTransaction: (id: number) => Promise<void>
 }>()
 
+function formatDate(dateStr: string | Date): string {
+  const date = new Date(dateStr)
 
+  const formatter = new Intl.DateTimeFormat('de-DE', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  })
+
+  const parts = formatter.formatToParts(date)
+
+  const day = parts.find(p => p.type === 'day')?.value
+  const month = parts.find(p => p.type === 'month')?.value.replace('.', '')
+  const year = parts.find(p => p.type === 'year')?.value
+
+  return `${day}. ${month!.toUpperCase()} ${year}`
+}
 </script>
 
 <template>
@@ -28,7 +44,7 @@ const props = defineProps<{
         <th>{{ index + 1 }}</th>
         <td>{{ eintrag.description }}</td>
         <td>{{ eintrag.amount }}</td>
-        <td>{{ eintrag.date }}</td>
+        <td>{{ formatDate(eintrag.date) }}</td>
         <td>
           <div class="editButton">
             <div class="icon-wrappter">
