@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineProps} from 'vue'
+import {defineProps, ref, computed} from 'vue'
 import type {Transaction} from "@/types.ts";
 import {Trash, Pencil} from "lucide-vue-next";
 
@@ -7,6 +7,18 @@ const props = defineProps<{
   items: Transaction[]
   deleteTransaction: (id: number) => Promise<void>
 }>()
+
+const descriptionFilter = ref('')
+
+const filteredItems = computed(() => {
+  // wenn Filter leer → alle Items anzeigen
+  if (!descriptionFilter.value) return props.items
+
+  // sonst: nur Items, die den Filter-Text enthalten (case-insensitive)
+  return props.items.filter(item =>
+    item.description.toLowerCase().includes(descriptionFilter.value.toLowerCase())
+  )
+})
 
 function formatDate(dateStr: string | Date): string {
   const date = new Date(dateStr)
@@ -29,7 +41,15 @@ function formatDate(dateStr: string | Date): string {
 
 <template>
   <div>
-    <h1 class="headline">Umsatzübersicht</h1>
+    <div class="form-row">
+      <h1 class="headline">Umsatzübersicht</h1>
+      <label for="description">Filtere die Umsätze nach der Bezeichnung</label>
+      <input
+        id="descriptionFilter"
+        type="text"
+        v-model="descriptionFilter"
+      />
+    </div>
     <table>
       <tbody>
       <tr>
@@ -40,38 +60,32 @@ function formatDate(dateStr: string | Date): string {
         <th>Eintrag bearbeiten</th>
         <th>Eintrag Löschen</th>
       </tr>
-      <tr v-for="(eintrag, index) in props.items" :key="eintrag.id">
-        <th>{{ index + 1 }}</th>
-        <td>{{ eintrag.description }}</td>
-        <td>{{ eintrag.amount }}</td>
-        <td>{{ formatDate(eintrag.date) }}</td>
-        <td>
-          <div class="editButton">
-            <div class="icon-wrappter">
-              <Pencil class="icon"/>
+        <tr v-for="(eintrag, index) in filteredItems" :key="eintrag.id">
+          <th>{{ index + 1 }}</th>
+          <td>{{ eintrag.description }}</td>
+          <td>{{ eintrag.amount }}</td>
+          <td>{{ formatDate(eintrag.date) }}</td>
+          <td>
+            <div class="editButton">
+              <div class="icon-wrappter">
+                <Pencil class="icon"/>
+              </div>
             </div>
-          </div>
-        </td>
-        <td>
-          <div class="deleteButton" @click="deleteTransaction(eintrag.id!)">
-            <div class="icon-wrappter">
-              <Trash class="icon"/>
+          </td>
+          <td>
+            <div class="deleteButton" @click="deleteTransaction(eintrag.id!)">
+              <div class="icon-wrappter">
+                <Trash class="icon"/>
+              </div>
             </div>
-          </div>
-        </td>
-      </tr>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </template>
 
 <style scoped>
-h1 {
-  width: 100%;
-  padding: 1rem;
-  border-top: 1px solid rgba(200, 255, 244, 0.5);
-}
-
 table {
   width: 95%;
   border-collapse: collapse;
@@ -141,5 +155,44 @@ th {
   font-size: 1.8rem;
   padding: 1rem 0;
   color: white;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: white;
+  width: 95%;
+  margin: 0 auto 2rem auto;
+}
+
+.form-row input {
+  width: 100%;
+  padding: 0.8rem 0.6rem;
+  border: 2px solid #555;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: white;
+
+  background-color: #373737;
+}
+
+.form-row label {
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.form-row label {
+  font-weight: 500;
+}
+
+.form-row input {
+  padding: 0.6rem 1rem;
 }
 </style>
