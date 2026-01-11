@@ -15,7 +15,34 @@ const props = defineProps<{
   loadTransaction: () => Promise<void>
 }>()
 
+const errors = ref({
+  description: '',
+  amount: '',
+  date: ''
+})
+
+function validateForm() {
+  errors.value = { description: '', amount: '', date: '' }
+
+  if (!description.value) {
+    errors.value.description = 'Beschreibung ist erforderlich!'
+  }
+
+  if (amount.value === null || amount.value === 0) {
+    errors.value.amount = 'Betrag muss ungleich 0 sein!'
+  }
+
+  if (!date.value) {
+    errors.value.date = 'Datum ist erforderlich!'
+  }
+
+  return !errors.value.description &&
+    !errors.value.amount &&
+    !errors.value.date
+}
+
 async function saveTransaction() {
+  if (!validateForm()) return
   const token = await getAccessTokenSilently()
 
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL // 'http://localhost:8080' in dev mode
@@ -54,6 +81,9 @@ async function saveTransaction() {
         type="text"
         v-model="description"
       />
+      <span v-if="errors.description" class="error">
+        {{ errors.description }}
+      </span>
     </div>
 
     <div class="form-row">
@@ -64,6 +94,9 @@ async function saveTransaction() {
         step="0.01"
         v-model="amount"
       />
+      <span v-if="errors.amount" class="error">
+        {{ errors.amount }}
+      </span>
     </div>
 
     <div class="form-row">
@@ -73,6 +106,9 @@ async function saveTransaction() {
         type="date"
         v-model="date"
       />
+      <span v-if="errors.date" class="error">
+        {{ errors.date }}
+      </span>
     </div>
 
     <Button @click="saveTransaction" class="btn">
@@ -136,5 +172,11 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.error {
+  color: #E44545;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
 }
 </style>

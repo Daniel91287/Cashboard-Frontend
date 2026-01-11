@@ -86,7 +86,7 @@ tbody tr th {
   text-decoration: underline;
   cursor: pointer;
   border-color: transparent;
-  background: #7D2020;
+  background: #b7393b;
 }
 
 .editButton {
@@ -108,7 +108,7 @@ tbody tr th {
   text-decoration: underline;
   cursor: pointer;
   border-color: transparent;
-  background: #48787e;
+  background: #183c60;
 }
 
 th, tr, td {
