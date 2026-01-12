@@ -121,7 +121,6 @@ async function saveTransaction() {
 <style scoped>
 .form {
   padding: 1.5rem;
-  padding-bottom: 2rem;
   border-bottom: 1px solid rgba(200, 255, 244, 0.5);
 }
 

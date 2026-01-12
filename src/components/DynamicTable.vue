@@ -75,7 +75,7 @@ function startEditing(eintrag: Transaction) {
   editingId.value = eintrag.id
   description.value = eintrag.description
   amount.value = eintrag.amount
-  date.value = eintrag.date
+  date.value = eintrag.date.toISOString().slice(0, 10)
 }
 
 const editingId = ref<number | null>(null) // aktuell bearbeitete Transaktion
