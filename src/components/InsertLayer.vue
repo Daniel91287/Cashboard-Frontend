@@ -28,7 +28,9 @@ function validateForm() {
     errors.value.description = 'Beschreibung ist erforderlich!'
   }
 
-  if (amount.value === null || amount.value === 0) {
+  if (amount.value === null ||
+    !Number.isFinite(amount.value) ||
+    amount.value === 0) {
     errors.value.amount = 'Betrag muss ungleich 0 sein!'
   }
 

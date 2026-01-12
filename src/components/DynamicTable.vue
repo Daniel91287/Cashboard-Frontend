@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {defineProps, ref, computed} from 'vue'
+import {defineProps, ref, computed, watch} from 'vue'
 import type {Transaction} from "@/types.ts";
-import {Trash, Pencil, CircleX} from "lucide-vue-next";
+import {Trash, Pencil, CircleX, Save} from "lucide-vue-next";
 import axios from "axios";
 import {useAuth0} from "@auth0/auth0-vue";
+
 const {getAccessTokenSilently} = useAuth0()
 
 const props = defineProps<{
@@ -51,13 +52,15 @@ const errors = ref({
 })
 
 function validateForm() {
-  errors.value = { description: '', amount: '', date: '' }
+  errors.value = {description: '', amount: '', date: ''}
 
   if (!description.value) {
     errors.value.description = 'Beschreibung ist erforderlich!'
   }
 
-  if (amount.value === null || amount.value === 0) {
+  if (amount.value === null ||
+    !Number.isFinite(amount.value) ||
+    amount.value === 0) {
     errors.value.amount = 'Betrag muss ungleich 0 sein!'
   }
 
@@ -72,10 +75,14 @@ function validateForm() {
 
 function startEditing(eintrag: Transaction) {
   if (!eintrag.id) return
+  resetErrors()
   editingId.value = eintrag.id
   description.value = eintrag.description
   amount.value = eintrag.amount
-  date.value = eintrag.date.toISOString().slice(0, 10)
+  const d = new Date(eintrag.date)
+  date.value = !isNaN(d.getTime())
+    ? d.toISOString().slice(0, 10)
+    : ''
 }
 
 const editingId = ref<number | null>(null) // aktuell bearbeitete Transaktion
@@ -99,7 +106,6 @@ async function updateTransaction(id: number) {
     }
   })
 
-  // Reset Form & editingId
   description.value = ""
   amount.value = 0
   date.value = ""
@@ -107,6 +113,14 @@ async function updateTransaction(id: number) {
 
   await props.loadTransaction()
 }
+
+function resetErrors() {
+  errors.value = { description: '', amount: '', date: '' }
+}
+
+watch(description, () => errors.value.description = '')
+watch(amount, () => errors.value.amount = '')
+watch(date, () => errors.value.date = '')
 </script>
 
 <template>
@@ -119,6 +133,23 @@ async function updateTransaction(id: number) {
         type="text"
         v-model="descriptionFilter"
       />
+      <div class="errorText">
+        <div class="errorTextSmall">
+      <span v-if="errors.description" class="error">
+        {{ errors.description }}
+      </span>
+        </div>
+        <div class="errorTextSmall">
+      <span v-if="errors.amount" class="error">
+        {{ errors.amount }}
+      </span>
+        </div>
+        <div class="errorTextSmall">
+      <span v-if="errors.date" class="error">
+        {{ errors.date }}
+      </span>
+        </div>
+      </div>
     </div>
     <table>
       <tbody>
@@ -129,51 +160,59 @@ async function updateTransaction(id: number) {
         <th>Datum</th>
         <th>Funktionen</th>
       </tr>
-        <tr v-for="(eintrag, index) in filteredItems" :key="eintrag.id">
-          <td>{{ index + 1 }}</td>
+      <tr v-for="(eintrag, index) in filteredItems" :key="eintrag.id">
+        <td>{{ index + 1 }}</td>
 
-          <td>
-            <input v-if="editingId === eintrag.id" v-model="description">
-            <span v-else>{{ eintrag.description }}</span>
-          </td>
+        <td>
+          <input v-if="editingId === eintrag.id" v-model="description" class="table-input">
+          <span v-else>{{ eintrag.description }}</span>
+        </td>
 
-          <td>
-            <input
+        <td>
+          <input
+            class="table-input"
             v-if="editingId === eintrag.id"
             type="number"
             step="0.01"
             v-model.number="amount"
           />
-            <span v-else>{{ eintrag.amount }}</span>
-          </td>
+          <span v-else>{{ eintrag.amount }}</span>
+        </td>
 
-          <td><input
+        <td>
+          <input
+            class="table-input"
             v-if="editingId === eintrag.id"
             type="date"
             v-model="date"
           />
-            <span v-else>{{ formatDate(eintrag.date) }}</span>
-          </td>
+          <span v-else>{{ formatDate(eintrag.date) }}</span>
+        </td>
 
-          <td class="functions">
-            <button v-if="editingId !== eintrag.id" class="editButton" @click="startEditing(eintrag)">
-              <Pencil class="icon"/>
-            </button>
-            <button v-else class="cancelButton" @click="editingId = null">
-              <CircleX class="icon"/>
-            </button>
+        <td class="functions">
+          <button v-if="editingId !== eintrag.id" class="editButton" @click="startEditing(eintrag)">
+            <Pencil class="icon"/>
+          </button>
 
-            <Button class="cancelButton"
-              v-if="editingId === eintrag.id"
-              @click="updateTransaction(eintrag.id)">
-              <Pencil class="icon"/>
-            </Button>
+          <button
+            v-else class="cancelButton"
+            @click="() =>  { editingId = null; resetErrors(); }">
+            <CircleX class="icon"/>
+          </button>
 
-            <button class="deleteButton" @click="deleteTransaction(eintrag.id!)">
-                <Trash class="icon"/>
-            </button>
-          </td>
-        </tr>
+          <button class="saveButton"
+                  v-if="editingId === eintrag.id"
+                  @click="updateTransaction(eintrag.id)">
+            <Save class="icon"/>
+          </button>
+
+          <button class="deleteButton"
+                  v-if="editingId !== eintrag.id"
+                  @click="deleteTransaction(eintrag.id!)">
+            <Trash class="icon"/>
+          </button>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>
@@ -234,14 +273,7 @@ tbody tr th {
   color: white;
 }
 
-.editButton:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  border-color: transparent;
-  background: #183c60;
-}
-
-.cancelButton{
+.saveButton {
   display: flex;
   width: 100%;
   max-width: 55px;
@@ -249,7 +281,35 @@ tbody tr th {
   gap: 12px;
   padding: 12px;
   border-radius: 12px;
-  background: #027374;
+  background: #29883d;
+  border: 1px solid hsla(207, 54%, 51%, 0.15);
+  box-shadow: 1px 3px 4px hsla(0, 0%, 0%, 0.2);
+  transition: all 0.5s ease;
+  color: white;
+}
+
+.editButton:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  border-color: transparent;
+  background: #183c60;
+}
+
+.saveButton:hover {
+  cursor: pointer;
+  border-color: transparent;
+  background: #216e31;
+}
+
+.cancelButton {
+  display: flex;
+  width: 100%;
+  max-width: 55px;
+  margin: 0 auto;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #1D4975;
   border: 1px solid hsla(207, 54%, 51%, 0.15);
   box-shadow: 1px 3px 4px hsla(0, 0%, 0%, 0.2);
   transition: all 0.5s ease;
@@ -260,10 +320,10 @@ tbody tr th {
   text-decoration: underline;
   cursor: pointer;
   border-color: transparent;
-  background: #016061;
+  background: #183c60;
 }
 
-th, tr, td {
+tr {
   text-align: left;
   border-bottom: 1px solid #ddd;
   color: white;
@@ -316,5 +376,25 @@ th {
 
 .form-row input {
   padding: 0.6rem 1rem;
+}
+
+.table-input {
+  background-color: #373737;
+  border: 2px solid #555;
+  border-radius: 8px;
+  color: white;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+
+.table-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.errorText {
+  margin-top: 1rem;
+  color: #E44545;
 }
 </style>
