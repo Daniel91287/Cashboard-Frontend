@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<div>test</div>
+  <h1>Hier darfst du dich austoben @Daniel</h1>
 </template>
 
 <style scoped>

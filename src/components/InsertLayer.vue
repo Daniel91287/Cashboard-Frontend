@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, defineProps} from 'vue';
 import axios from 'axios'
-import type {Transaction} from "@/types.ts";
+import type {RecurrenceInterval, Transaction} from "@/types.ts";
 import {Plus} from "lucide-vue-next";
 import {useAuth0} from "@auth0/auth0-vue";
 
@@ -10,6 +10,8 @@ const {getAccessTokenSilently} = useAuth0()
 const description = ref<string>("");
 const amount = ref<number>(0);
 const date = ref<string>("");
+const endDate = ref<string>("");
+const recurrenceInterval = ref<RecurrenceInterval>('NON');
 
 const props = defineProps<{
   loadTransaction: () => Promise<void>
@@ -22,7 +24,7 @@ const errors = ref({
 })
 
 function validateForm() {
-  errors.value = { description: '', amount: '', date: '' }
+  errors.value = {description: '', amount: '', date: ''}
 
   if (!description.value) {
     errors.value.description = 'Beschreibung ist erforderlich!'
@@ -53,7 +55,11 @@ async function saveTransaction() {
   const payload: Transaction = {
     description: description.value,
     amount: amount.value,
-    date: new Date(date.value)
+    date: new Date(date.value),
+    recurrenceInterval: recurrenceInterval.value
+  }
+  if (endDate.value) {
+    payload.endDate = new Date(endDate.value)
   }
 
   await axios.post(endpoint, payload, {
@@ -65,10 +71,11 @@ async function saveTransaction() {
   description.value = "";
   amount.value = 0;
   date.value = "";
+  recurrenceInterval.value = 'NON';
+  endDate.value = "";
 
   await props.loadTransaction()
 }
-
 
 </script>
 
@@ -113,6 +120,38 @@ async function saveTransaction() {
       </span>
     </div>
 
+    <div class="form-row">
+      <label for="recurrenceInterval">
+        Wiederholungsintervall
+        <span class="optional">(optional)</span>
+      </label>
+
+      <select
+        id="recurrenceInterval"
+        v-model="recurrenceInterval"
+      >
+        <option value="NON">Keine Wiederholung</option>
+        <option value="DAILY">Täglich</option>
+        <option value="WEEKLY">Wöchentlich</option>
+        <option value="MONTHLY">Monatlich</option>
+        <option value="QUARTERLY">Quartalsweise</option>
+        <option value="YEARLY">Jährlich</option>
+      </select>
+    </div>
+
+    <div class="form-row"
+    v-if="recurrenceInterval != 'NON'">
+      <label for="date">Enddatum</label>
+      <input
+        id="endDate"
+        type="Date"
+        v-model="endDate"
+      />
+      <span v-if="errors.date" class="error">
+        {{ errors.date }}
+      </span>
+    </div>
+
     <Button @click="saveTransaction" class="btn">
       <Plus class="icon"/>
       Eintrag speichern
@@ -139,7 +178,7 @@ h1 {
   color: white;
 }
 
-.form-row input {
+.form-row input, select {
   width: 100%;
   padding: 0.8rem 0.6rem;
   border: 2px solid #555;
@@ -161,11 +200,21 @@ h1 {
   box-shadow: 0 0 0 1px #3b82f6;
 }
 
+.form-row select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
 .form-row label {
   font-weight: 500;
 }
 
 .form-row input {
+  padding: 0.6rem 1rem;
+}
+
+.form-row select {
   padding: 0.6rem 1rem;
 }
 
