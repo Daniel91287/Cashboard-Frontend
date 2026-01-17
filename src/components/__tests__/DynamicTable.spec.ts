@@ -89,4 +89,27 @@ describe('DynamicTable (Auth0 gemockt)', () => {
 
     expect(loadTransaction).toHaveBeenCalled()
   })
+
+  it('ruft getAccessTokenSilently nicht beim initialen Rendern auf', () => {
+    shallowMount(DynamicTable, {
+      props: { items, deleteTransaction, loadTransaction }
+    })
+
+    expect(getAccessTokenSilentlyMock).not.toHaveBeenCalled()
+  })
+
+  it('setzt den Beschreibungsfilter zurück und zeigt wieder alle Einträge', async () => {
+    const wrapper = shallowMount(DynamicTable, {
+      props: { items, deleteTransaction, loadTransaction }
+    })
+
+    await wrapper.find('#descriptionFilter').setValue('miet')
+    expect(wrapper.text()).toContain('Miete')
+    expect(wrapper.text()).not.toContain('Gehalt')
+
+    await wrapper.find('#descriptionFilter').setValue('')
+    expect(wrapper.text()).toContain('Miete')
+    expect(wrapper.text()).toContain('Gehalt')
+  })
+
 })
