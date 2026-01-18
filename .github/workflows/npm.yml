@@ -19,5 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run unit tests
+      - name: Run unit tests (disable rollup native)
+        env:
+          ROLLUP_DISABLE_NATIVE: "1"
         run: npm run test:unit
