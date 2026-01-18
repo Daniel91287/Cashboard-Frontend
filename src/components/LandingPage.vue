@@ -7,8 +7,8 @@
       <h1 class="headline">
         Willkommen auf
         <span class="brand">
-          <img src="/Logo.png" alt="CashBoard Logo" />
-          CashBoard
+          <img src="/Logo.png" alt="Cashboard Logo" />
+          Cashboard
         </span>
       </h1>
 
