@@ -23,3 +23,6 @@ jobs:
         env:
           ROLLUP_DISABLE_NATIVE: "1"
         run: npm run test:unit
+
+      - name: install rollup linux binary
+        run: npm i -D @rollup/rollup-linux-x64-gnu@4.52.5
